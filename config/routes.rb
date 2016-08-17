@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'session/new'
 
-	root 'users#index'
+	root 'session#new'
 	post '/session/create' => 'session#create'
 	post '/users/create' => 'users#create'
 	get '/users/new' => 'users#new'

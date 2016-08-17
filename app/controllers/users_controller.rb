@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 		@secrets = Secret.where(user: @user)
 	end
 	def create
-
+		# @user = User.create(user_params)
 		@user = User.create(name: params[:name], email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
 
 		if @user.save 
@@ -37,6 +37,11 @@ class UsersController < ApplicationController
 		reset_session
 		redirect_to '/session/new'
 
+	end
+private 
+
+	def user_params
+		params.required(:user).permit(:name, :email, :password, :password_confirmation)
 	end
 
 end
