@@ -1,0 +1,53 @@
+<h1><%= @user.name %></h1>
+<p><a href="/users/<%=@user.id%>/edit">Edit Profile</a></p>
+
+	<form action='/secrets/create' method='post'>
+		<input name='authenticity_token' value='<%= form_authenticity_token %>' type='hidden'>
+		<label>Post your secret:</label><br>
+		<textarea name="New_Secret"></textarea><br>
+		<button>Create Secret</button>
+	</form>
+
+<h4>Your Secrets:</h4>
+<table>
+<% @secrets.each do |s| %>
+	<tr>
+		<td><%= s.content %></td>
+		<td><%= s.likes.count %> likes</td>
+
+    <% @count = 0%>
+    <% s.likes.each do |like| %>
+      <% if like.user == current_user %>
+      <% @count += 1 %>
+      <% end %>
+      <% end %>
+
+  <% if @count == 0 %>
+
+  <td><form action='/likes/<%= s.id %>' method='post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    <input type='hidden' name='secret_id' value='<%= s.id %>'>
+    <input type='submit' value='Like'>
+  </form></td>
+
+<% else %>
+
+  <td><form action='/likes/<%= s.id %>' method='post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    <input type='hidden' name='_method' value='delete'>
+    <input type='hidden' name='secret_id' value='<%= s.id %>'>
+    <input type='submit' value='Unlike'>
+  </form></td>
+
+<% end %>
+
+		<td>	
+			<form action='/secrets/<%= s.id %>' method="post">
+				<input type="hidden" name="_method" value="delete">
+				<input name='authenticity_token' value='<%= form_authenticity_token %>' type='hidden'>
+				<button>Delete</button>
+			</form>
+		</td>
+	</tr>
+<% end %>
+</table>

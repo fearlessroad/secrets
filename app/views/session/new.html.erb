@@ -1,0 +1,37 @@
+<style type="text/css">
+	#container{
+		margin: 0 auto;
+		width:400px;
+		border:1px solid silver;
+		text-align:center;
+	}
+	label, input{
+		display:block;
+		width:150px;
+		float:left;
+		margin-bottom:10px;
+	}
+	label{
+		text-align:right;
+		padding-right:20px;
+	}
+	br{
+		clear:left;
+	}
+
+</style>
+<% if flash[:errors] %>
+	<% flash[:errors].each do |e| %>
+		<p><%= e %></p>
+	<% end %>
+<% end %>
+
+<div id="container">
+	<h4>Log In</h4>
+	<form action="/session/create" method="post">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<label>Email</label><input type="email" name="email"><br>
+		<label>Password</label><input type="password" name="password"><br>
+		<button>Log In</button>
+	</form>
+</div> 

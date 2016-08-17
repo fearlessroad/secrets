@@ -1,0 +1,48 @@
+<style type='text/css'>
+	#container{
+		margin: 0 auto;
+		width:400px;
+		border:1px solid silver;
+		text-align:center;
+	}
+	label, input{
+		display:block;
+		width:150px;
+		float:left;
+		margin-bottom:10px;
+	}
+	label{
+		text-align:right;
+		padding-right:20px;
+	}
+	br{
+		clear:left;
+	}
+	button{
+		margin:10px;
+	}
+</style>
+<% if flash[:errors] %>
+	<% flash[:errors].each do |e| %>
+		<p><%= e %></p>
+	<% end %>
+<% end %>
+
+<div id='container'>
+	<h4>Edit</h4>
+	<form action='/users/<%=@user.id%>' method='post'>
+		<input type="hidden" name="_method" value="patch">
+		<input name='authenticity_token' value='<%= form_authenticity_token %>' type='hidden'>
+		<label>Name</label><input type='text' name='name' value="<%=@user.name%>"><br>
+		<label>Email</label><input type='email' name='email' value="<%=@user.email%>"><br>
+		<label>Password</label><input type='password' name='password' value=""><br>
+		<button>Update</button>
+	</form>
+	
+	<form action='/users/<%= @user.id%>' method="post">
+		<input type="hidden" name="_method" value="delete">
+		<input name='authenticity_token' value='<%= form_authenticity_token %>' type='hidden'>
+		<button>Delete Account</button>
+	</form>
+
+</div>
